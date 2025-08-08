@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bank of Sillys — Login</title>
+  <style>
+    /* Simple, clean styling */
+    :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial;margin:0;padding:0}
+    body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f7f3ff,#fff9f0)}
+    .card{width:360px;padding:28px;border-radius:12px;box-shadow:0 10px 30px rgba(20,20,40,0.08);background:#ffffff}
+    h1{margin:0 0 8px;font-size:20px}
+    p.lead{margin:0 0 18px;color:#444;font-size:14px}
+    label{display:block;font-size:13px;margin-top:12px;color:#222}
+    input[type=text],input[type=password]{width:100%;padding:10px 12px;border-radius:8px;border:1px solid #e5e7eb;margin-top:6px;box-sizing:border-box}
+    button{margin-top:18px;width:100%;padding:12px;border-radius:10px;border:0;background:#6b46c1;color:white;font-weight:600;cursor:pointer}
+    .msg{margin-top:12px;font-size:13px;color:#b91c1c;min-height:18px}
+    .hint{margin-top:10px;font-size:12px;color:#555}
+    footer{margin-top:18px;font-size:12px;color:#666;text-align:center}
+  </style>
+</head>
+<body>
+  <main class="card" role="main">
+    <h1>Bank of Sillys</h1>
+    <p class="lead">Welcome. Please sign in with your Empire ID and password.</p>
+
+    <form id="loginForm" autocomplete="off">
+      <label for="empireId">Empire ID</label>
+      <input id="empireId" name="empireId" type="text" inputmode="numeric" pattern="[0-9]*" required />
+
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" required />
+
+      <button type="submit">Sign in</button>
+
+      <div class="msg" id="message" aria-live="polite"></div>
+      <div class="hint">This demo performs client-side checking only. Do not use for real banking.</div>
+    </form>
+
+    <footer>Empire of the Sillys — Bank of Sillys</footer>
+  </main>
+
+  <script>
+    /*
+      Demo login logic (client-side only):
+      - For demo/testing only. Never use client-side auth for real accounts.
+      - To add a user, edit the `users` object below with id: password pairs.
+      - On successful login the page redirects to "<id>.html" in the same directory.
+    */
+
+    // Example user database (for demo). Replace or extend as needed.
+    const users = {
+      "10001": "silly123",
+      "10002": "giggle",
+      "42": "answer",
+    };
+
+    const form = document.getElementById('loginForm');
+    const msg = document.getElementById('message');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      msg.textContent = '';
+
+      const id = document.getElementById('empireId').value.trim();
+      const pass = document.getElementById('password').value;
+
+      if (!id) { msg.textContent = 'Please enter your Empire ID.'; return; }
+
+      // Simple check: does the id exist and password match?
+      if (users.hasOwnProperty(id) && users[id] === pass) {
+        // Successful login — redirect to "<id>.html" in same directory
+        // Note: ensure the target file exists (for example: 10001.html)
+        window.location.href = `${encodeURIComponent(id)}.html`;
+      } else {
+        msg.textContent = 'Invalid Empire ID or password.';
+      }
+    });
+  </script>
+</body>
+</html>
